@@ -1,9 +1,10 @@
 import { userState } from "@/types/user.type";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const initialState: userState = {
-  token: null,
+  token: localStorage.getItem("token"),
 };
 export const loginUser = createAsyncThunk(
   "user/login",
@@ -22,10 +23,15 @@ const userSlice = createSlice({
   extraReducers: function (builder) {
     builder.addCase(loginUser.fulfilled, (state,action) => {
       console.log("login success");
-      console.log();
+      console.log("state",state)
+      console.log("payload",action)
+     state.token= action.payload.token
+     localStorage.setItem("token",action.payload.token )
+     toast.success("welcome")
     });
-    builder.addCase(loginUser.rejected, () => {
-      console.log("error login");
+    builder.addCase(loginUser.rejected, (state,action) => {
+      console.log("error login",action.error.message);
+      toast.error("Incorrect email or password")
     });
   },
 });

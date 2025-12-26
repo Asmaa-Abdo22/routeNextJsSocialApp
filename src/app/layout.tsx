@@ -6,7 +6,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/theme";
 import ReduxProvider from "@/components/ReduxProvider/ReduxProvider";
 import Navbar from "@/components/Navbar/Navbar";
-
+import  { Toaster } from 'react-hot-toast';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,7 +34,9 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <ReduxProvider>
               <Navbar/>
-              {children}</ReduxProvider>
+              {children}
+              <Toaster position="top-center"/>
+              </ReduxProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

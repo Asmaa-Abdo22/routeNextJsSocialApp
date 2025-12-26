@@ -6,9 +6,12 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
 import { loginUser } from "@/store/slices/user.slice";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "@/hooks/store.hook";
+import { useRouter } from "next/router";
+
 export default function Page() {
-  const dispatch= useDispatch()
+  // const router = useRouter();
+  const dispatch = useAppDispatch();
   const myFormik = useFormik({
     initialValues: {
       email: "",
@@ -16,9 +19,19 @@ export default function Page() {
     },
     onSubmit: (values) => {
       console.log(values);
-      // dispatch(loginUser(values))
+      dispatch(loginUser(values))
+        .then((res) => {
+          console.log(res);
+          if (res.payload.message === "success") {
+            // router.push("/");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   });
+
   return (
     <>
       <Box sx={{ width: 600, mx: "auto", p: 2 }}>
