@@ -16,6 +16,11 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ChatIcon from "@mui/icons-material/Chat";
 import Stack from "@mui/material/Stack";
 import { Post } from "@/types/posts.type";
+import CommentCard from "../CommentCard/CommentCard";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -94,6 +99,22 @@ export default function PostCard({ postInfo }: { postInfo: Post }) {
           </IconButton>
         </Stack>
       </CardActions>
+      <Divider>comments</Divider>
+      <Box sx={{ p: 2 }}>
+        {postInfo.comments.length > 0 && (
+          <CommentCard commentInfo={postInfo.comments[0]} />
+        )}
+        <Button variant="contained" fullWidth sx={{ my: 2 }}>
+          Show More Comments
+        </Button>
+        <TextField
+          multiline
+          minRows={2}
+          fullWidth
+          placeholder="Enter comment"
+          sx={{ mt: 2 }}
+        />
+      </Box>
     </Card>
   );
 }
